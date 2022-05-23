@@ -1,0 +1,88 @@
+ <div class="text-center">
+            <button (click)="addProduct()"  class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">Add New Course</button>
+        </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class=""container>
+                <form [formGroup]="formValue">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="">Course</label>
+                            <input type="text" formControlName="course" class="form-control" id="course" [ngClass]="{'control-error':!formValue.get('course')?.valid && formValue.get('course')?.dirty}">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="">Level</label>
+                            <select class="form-control" formControlName="level" id="level">
+                                <option>Beginner</option>
+                                <option>Intermideate</option>
+                                <option>Advanced</option>
+                            </select>
+                        </div> 
+                        <div class="col-lg-4">
+                            <label for="">Location</label>
+                            <input type="text" formControlName="location" id="location" class="form-control">
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="">Start Date</label>
+                            <input type="date" formControlName="startDate" class="form-control" id="startDate" required>
+                        </div> 
+                        <div class="col-lg-4">
+                            <label for="">Fee</label>
+                            <input type="number" formControlName="fee" class="form-control" id="fee">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel" data-bs-dismiss="modal">Close</button> 
+                <button type="button" *ngIf="showAdd"  class="btn btn-primary" (click)="postProductDetails()">Add</button>
+                 <button type="button" *ngIf="showUpdate"  class="btn btn-primary" (click)="updateProductDetails()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Level</th>
+                    <th>Location</th>
+                    <th>Start date</th>
+                    <th>Fee</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+             
+            <tbody>
+                <tr *ngFor="let product of productData">
+                    <td>{{product.course.toUpperCase()}}</td>
+                    <td>{{product.level}}</td>
+                    <td>{{product.location}}</td>
+                    <td>{{product.startDate}}</td>
+                    <td>${{product.fee}}</td>
+                    <td>
+                        <a type="button"type="button" class="btn btn-success pt" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            (click)="postData(product)">Update</a>
+                            <a class="btn btn-danger" (click)="deleteProduct(product)">Delete</a>
+                    </td>
+                    
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
